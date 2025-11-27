@@ -8,24 +8,8 @@ except ImportError:
     Fore = Style = None
 from instagrapi import Client
 
+
 cl = Client()
-AUTH_FILE = "session.json"
-
-def save_session():
-    with open(AUTH_FILE, "w") as f:
-        json.dump(cl.get_settings(), f)
-
-def load_session():
-    if os.path.exists(AUTH_FILE):
-        with open(AUTH_FILE) as f:
-            settings = json.load(f)
-            cl.set_settings(settings)
-        try:
-            cl.login(cl.username, cl.password)
-            return True
-        except:
-            return False
-    return False
 
 def login():
     username = input("Instagram username: ")
@@ -36,14 +20,12 @@ def login():
         password = input("Instagram password: ")
     try:
         cl.login(username, password)
-        save_session()
         print("✔ Login successful")
     except Exception as e:
         if "Two-factor authentication required" in str(e):
             verification_code = input("Enter 2FA verification code: ")
             try:
                 cl.login(username, password, verification_code=verification_code)
-                save_session()
                 print("✔ Login successful (2FA)")
             except Exception as e2:
                 print(f"❌ 2FA login failed: {e2}")
@@ -97,8 +79,7 @@ def send_dm():
         print(f"❌ Failed to send message: {e}")
 
 def main():
-    if not load_session():
-        login()
+    login()
 
     while True:
         print(Fore.BLUE + Style.BRIGHT + "\n✨ === DM Instagram CLI === ✨" if Fore else "\n=== DM Instagram CLI ===")
@@ -113,7 +94,6 @@ def main():
         elif choice == "2": open_thread()
         elif choice == "3": send_dm()
         elif choice == "4":
-            if os.path.exists(AUTH_FILE): os.remove(AUTH_FILE)
             print("Logged out ✔")
             exit()
         elif choice == "5": exit()

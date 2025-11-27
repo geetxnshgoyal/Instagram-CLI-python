@@ -8,7 +8,7 @@ A simple, human-friendly command-line tool to send and receive Instagram DMs usi
 - Open and read chat threads
 - Send direct messages
 - Two-factor authentication support
-- Logout and session management
+- Logout
 
 ## Requirements
 - Python 3.11 (recommended)
@@ -40,8 +40,8 @@ A simple, human-friendly command-line tool to send and receive Instagram DMs usi
 - This tool may not work with Python 3.14 or newer due to package compatibility. Use Python 3.11 for best results.
 
 ## Security
-- Your session is saved locally in `session.json` for convenience. Delete this file to logout.
 - Passwords are never stored or displayed.
+- No session data is saved locally; you must log in each time you run the CLI.
 
 ## License
 MIT
